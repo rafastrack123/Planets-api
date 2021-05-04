@@ -1,6 +1,5 @@
 package b2w.test.star.wars.planets.api.controllers;
 
-import static java.util.Collections.emptyList;
 import static org.springframework.data.domain.PageRequest.of;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -11,7 +10,6 @@ import b2w.test.star.wars.planets.services.PlanetService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +54,12 @@ public class PlanetController {
     @ResponseStatus(CREATED)
     public PlanetResponse createPlanet(@RequestBody PlanetRequest request) {
         log.info("Creating planet: {}", request);
-        return new PlanetResponse();
+
+        var planet = converter.from(request);
+
+        var savedPlanet = service.save(planet);
+
+        return converter.from(savedPlanet);
     }
 
     @DeleteMapping("/{planetId}")

@@ -85,6 +85,15 @@ public class PlanetServiceTest {
     }
 
     @Test
+    void save() {
+        var planet = mock(Planet.class);
+
+        planetService.save(planet);
+
+        verify(planetRepository).save(planet);
+    }
+
+    @Test
     void deleteShouldThrowNotFoundException() {
         var planetId = "planet-id";
 

@@ -30,6 +30,10 @@ public class PlanetService {
                 .orElseThrow(() -> new NotFoundException("planet", planetId));
     }
 
+    public Planet save(Planet planet) {
+        return planetRepository.save(planet);
+    }
+
     public void delete(String planetId) {
         var planet = planetRepository.findById(planetId).
                 orElseThrow(() -> new NotFoundException("planet", planetId));

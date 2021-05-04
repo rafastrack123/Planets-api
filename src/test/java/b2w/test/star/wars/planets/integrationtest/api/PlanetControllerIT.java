@@ -1,6 +1,7 @@
 package b2w.test.star.wars.planets.integrationtest.api;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
@@ -10,6 +11,8 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import b2w.test.star.wars.planets.entities.Planet;
 import b2w.test.star.wars.planets.repositories.PlanetRepository;
 import io.restassured.RestAssured;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,7 +58,7 @@ public class PlanetControllerIT {
                 .body("content.name", not(emptyOrNullString()))
                 .body("content.terrain", not(emptyOrNullString()))
                 .body("content.climate", not(emptyOrNullString()))
-                .body("content.movieAppearances", not(emptyOrNullString()));
+                .body("content.movieAppearances", not(empty()));
     }
 
     @Test
@@ -109,6 +112,26 @@ public class PlanetControllerIT {
                 .get("/planet/{planetId}")
                 .then()
                 .statusCode(404);
+    }
+
+    @Test
+    void createPlanet() throws JSONException {
+        var request = new JSONObject()
+                .put("name", "earth")
+                .put("terrain", "earth-terrain")
+                .put("climate", "earth-climate");
+
+        given()
+                .body(request.toString())
+                .contentType("application/json")
+                .when()
+                .post("/planet")
+                .then()
+                .statusCode(201)
+                .body("name", equalTo("earth"))
+                .body("terrain", equalTo("earth-terrain"))
+                .body("climate", equalTo("earth-climate"))
+                .body("movieAppearances", equalTo(0));
     }
 
     @Test
