@@ -13,6 +13,7 @@ public class PlanetConverterTest {
     void fromEntityToResponse() {
         var planet = new Planet();
 
+        planet.setId("id");
         planet.setName("name");
         planet.setClimate("climate");
         planet.setTerrain("terrain");
@@ -20,6 +21,7 @@ public class PlanetConverterTest {
 
         var response = converter.from(planet);
 
+        then(response.getId()).isEqualTo("id");
         then(response.getName()).isEqualTo("name");
         then(response.getClimate()).isEqualTo("climate");
         then(response.getTerrain()).isEqualTo("terrain");

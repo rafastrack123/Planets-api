@@ -10,6 +10,7 @@ public class PlanetConverter {
     public PlanetResponse from(Planet planet) {
         var response = new PlanetResponse();
 
+        response.setId(planet.getId());
         response.setName(planet.getName());
         response.setClimate(planet.getClimate());
         response.setTerrain(planet.getTerrain());

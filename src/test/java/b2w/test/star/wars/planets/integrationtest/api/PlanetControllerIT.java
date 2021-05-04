@@ -2,6 +2,7 @@ package b2w.test.star.wars.planets.integrationtest.api;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.text.IsEmptyString.emptyOrNullString;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -50,6 +51,7 @@ public class PlanetControllerIT {
                 .get("/planet")
                 .then()
                 .statusCode(200)
+                .body("content.id", not(emptyOrNullString()))
                 .body("content.name", not(emptyOrNullString()))
                 .body("content.terrain", not(emptyOrNullString()))
                 .body("content.climate", not(emptyOrNullString()))
@@ -72,7 +74,8 @@ public class PlanetControllerIT {
                 .when()
                 .get("/planet")
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .body("content.id", hasItem(planet.getId()));
     }
 
     @Test
