@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ap1/v1/planet")
+@RequestMapping("/api/v1/planet")
 @Slf4j
 public class PlanetController {
 
@@ -37,7 +37,7 @@ public class PlanetController {
     }
 
     @GetMapping("/{planetId}")
-    public PlanetResponse getById(@PathVariable("planetId") String planetId) {
+    public PlanetResponse getById(@PathVariable String planetId) {
         log.info("Getting planet by id: {}", planetId);
 
         var planet = service.getById(planetId);
@@ -53,7 +53,7 @@ public class PlanetController {
     }
 
     @DeleteMapping("/{planetId}")
-    public void deletePlanet(@PathVariable("planetId") String planetId) {
+    public void deletePlanet(@PathVariable String planetId) {
         log.info("Deleting planet by id: {}", planetId);
         service.delete(planetId);
     }
