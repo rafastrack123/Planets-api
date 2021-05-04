@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class PlanetController {
 
-    private PlanetService planetService;
-    private PlanetConverter planetConverter;
+    private final PlanetService service;
+    private final PlanetConverter converter;
 
     @GetMapping
     public Page<PlanetResponse> list(@RequestParam(value = "name", required = false) String name) {
@@ -39,7 +39,10 @@ public class PlanetController {
     @GetMapping("/{planetId}")
     public PlanetResponse getById(@PathVariable("planetId") String planetId) {
         log.info("Getting planet by id: {}", planetId);
-        return new PlanetResponse();
+
+        var planet = service.getById(planetId);
+
+        return converter.from(planet);
     }
 
     @PostMapping
@@ -52,6 +55,7 @@ public class PlanetController {
     @DeleteMapping("/{planetId}")
     public void deletePlanet(@PathVariable("planetId") String planetId) {
         log.info("Deleting planet by id: {}", planetId);
+        service.delete(planetId);
     }
 
 }
