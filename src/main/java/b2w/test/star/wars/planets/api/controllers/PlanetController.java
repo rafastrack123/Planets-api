@@ -1,6 +1,7 @@
 package b2w.test.star.wars.planets.api.controllers;
 
 import static java.util.Collections.emptyList;
+import static org.springframework.data.domain.PageRequest.of;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import b2w.test.star.wars.planets.api.models.PlanetRequest;
@@ -31,9 +32,15 @@ public class PlanetController {
     private final PlanetConverter converter;
 
     @GetMapping
-    public Page<PlanetResponse> list(@RequestParam(value = "name", required = false) String name) {
-        log.info("Listing planets with filter: {}", name);
-        return new PageImpl<>(emptyList());
+    public Page<PlanetResponse> list(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        log.info("Listing planets on page {} with size {} with filter: {}", page, size, name);
+
+        var planetsPage = service.list(name, of(page, size));
+
+        return planetsPage.map(converter::from);
     }
 
     @GetMapping("/{planetId}")

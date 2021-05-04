@@ -1,7 +1,9 @@
-package b2w.test.star.wars.planets.integrationtest;
+package b2w.test.star.wars.planets.integrationtest.api;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.text.IsEmptyString.emptyOrNullString;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import b2w.test.star.wars.planets.entities.Planet;
@@ -29,6 +31,48 @@ public class PlanetControllerIT {
     void beforeEach() {
         RestAssured.basePath = "/api/v1";
         RestAssured.port = port;
+    }
+
+    @Test
+    void listAll() {
+        var input = new Planet();
+
+        input.setName("jupiter");
+        input.setTerrain("jupiter-terrain");
+        input.setClimate("jupiter-climate");
+        input.setMovieAppearances(1);
+
+        planetRepository.save(input);
+
+        given()
+                .queryParam("name", "jupiter")
+                .when()
+                .get("/planet")
+                .then()
+                .statusCode(200)
+                .body("content.name", not(emptyOrNullString()))
+                .body("content.terrain", not(emptyOrNullString()))
+                .body("content.climate", not(emptyOrNullString()))
+                .body("content.movieAppearances", not(emptyOrNullString()));
+    }
+
+    @Test
+    void searchByName() {
+        var input = new Planet();
+
+        input.setName("jupiter");
+        input.setTerrain("jupiter-terrain");
+        input.setClimate("jupiter-climate");
+        input.setMovieAppearances(1);
+
+        var planet = planetRepository.save(input);
+
+        given()
+                .queryParam("name", "jupiter")
+                .when()
+                .get("/planet")
+                .then()
+                .statusCode(200);
     }
 
     @Test

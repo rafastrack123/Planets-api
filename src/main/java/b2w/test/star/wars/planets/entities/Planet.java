@@ -1,5 +1,6 @@
 package b2w.test.star.wars.planets.entities;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,9 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Planet")
-@Getter
-@Setter
-@ToString
+@Data
 public class Planet {
 
     @Id
