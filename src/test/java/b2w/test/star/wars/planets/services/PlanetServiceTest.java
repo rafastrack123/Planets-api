@@ -26,6 +26,8 @@ import org.springframework.data.domain.Pageable;
 public class PlanetServiceTest {
 
     @Mock
+    private MovieAppearancesService movieAppearancesService;
+    @Mock
     private PlanetRepository planetRepository;
 
     @InjectMocks
@@ -88,8 +90,11 @@ public class PlanetServiceTest {
     void save() {
         var planet = mock(Planet.class);
 
+        given(movieAppearancesService.getMovieAppearances(planet)).willReturn(5);
+
         planetService.save(planet);
 
+        verify(planet).setMovieAppearances(5);
         verify(planetRepository).save(planet);
     }
 

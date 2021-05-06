@@ -21,8 +21,14 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation group: 'io.github.openfeign', name: 'feign-jackson', version: '11.2'
+    implementation group: 'io.github.openfeign', name: 'feign-okhttp', version: '11.2'
+    implementation group: 'io.github.openfeign', name: 'feign-slf4j', version: '11.2'
+    implementation group: 'io.github.openfeign', name: 'feign-core', version: '11.2'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '4.2.0'
     testImplementation group: 'io.rest-assured', name: 'json-path', version: '4.2.0'

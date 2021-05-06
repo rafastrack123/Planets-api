@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PlanetService {
 
+    private final MovieAppearancesService movieAppearancesService;
     private final PlanetRepository planetRepository;
 
     public Page<Planet> list(String name, Pageable pageable) {
@@ -31,6 +32,9 @@ public class PlanetService {
     }
 
     public Planet save(Planet planet) {
+        var movieAppearances = movieAppearancesService.getMovieAppearances(planet);
+        planet.setMovieAppearances(movieAppearances);
+
         return planetRepository.save(planet);
     }
 
@@ -40,6 +44,5 @@ public class PlanetService {
 
         planetRepository.delete(planet);
     }
-
 
 }
