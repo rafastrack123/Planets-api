@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.unbroken-dome.test-sets' version '3.0.1'
     id 'java'
 }
 
@@ -35,4 +36,17 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+
+testSets {
+    integrationTest
+}
+
+
+sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.output + configurations.testCompile
+        runtimeClasspath += output + compileClasspath + configurations.testRuntime
+    }
 }

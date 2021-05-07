@@ -1,4 +1,4 @@
-package b2w.test.star.wars.planets.integrationtest.api;
+package b2w.test.star.wars.planet.integrationtest.api;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.empty;

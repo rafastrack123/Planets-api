@@ -1,4 +1,4 @@
-package b2w.test.star.wars.planets.integrationtest.data;
+package b2w.test.star.wars.planet.integrationtest.data;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.springframework.data.domain.PageRequest.of;
