@@ -43,11 +43,11 @@ public class MovieAppearancesServiceTest {
         response.setResults(List.of(samePlanetResponse, anotherPlanetResponse));
         response.setNext("http://next-page-url");
 
-        given(swapiApi.getFilmsByName("name")).willReturn(response);
+        given(swapiApi.getPlanetsByName("name")).willReturn(response);
 
         var result = movieAppearancesService.getMovieAppearances(planet);
 
-        verify(swapiApi, never()).getFilmsByResource(anyString());
+        verify(swapiApi, never()).getPlanetsByResource(anyString());
 
         then(result).isEqualTo(3);
     }
@@ -65,11 +65,11 @@ public class MovieAppearancesServiceTest {
         response.setResults(List.of(anotherPlanetResponse));
         response.setNext(null);
 
-        given(swapiApi.getFilmsByName("name")).willReturn(response);
+        given(swapiApi.getPlanetsByName("name")).willReturn(response);
 
         var result = movieAppearancesService.getMovieAppearances(planet);
 
-        verify(swapiApi, never()).getFilmsByResource(anyString());
+        verify(swapiApi, never()).getPlanetsByResource(anyString());
 
         then(result).isEqualTo(0);
     }
@@ -93,9 +93,9 @@ public class MovieAppearancesServiceTest {
 
         nextPageResponse.setResults(List.of(samePlanetResponse));
 
-        given(swapiApi.getFilmsByName("name")).willReturn(firstPageResponse);
+        given(swapiApi.getPlanetsByName("name")).willReturn(firstPageResponse);
 
-        given(swapiApi.getFilmsByResource("http://next-page-url")).willReturn(nextPageResponse);
+        given(swapiApi.getPlanetsByResource("http://next-page-url")).willReturn(nextPageResponse);
 
         var result = movieAppearancesService.getMovieAppearances(planet);
 

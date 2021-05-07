@@ -18,15 +18,15 @@ public class SwapiApi {
     @Value("${swapi.api.url}")
     String swapiUrl;
 
-    public PlanetSearchSwapiResponse getFilmsByName(String name) {
+    public PlanetSearchSwapiResponse getPlanetsByName(String name) {
         var url = swapiUrl + "/planets?search={planetName}";
         var response = restTemplate.getForEntity(url, PlanetSearchSwapiResponse.class, name);
 
         return getSuccessResponseOrDefaultEntity(response);
     }
 
-    public PlanetSearchSwapiResponse getFilmsByResource(String filmsResource) {
-        var response = restTemplate.getForEntity(filmsResource, PlanetSearchSwapiResponse.class);
+    public PlanetSearchSwapiResponse getPlanetsByResource(String planetsResource) {
+        var response = restTemplate.getForEntity(planetsResource, PlanetSearchSwapiResponse.class);
 
         return getSuccessResponseOrDefaultEntity(response);
     }

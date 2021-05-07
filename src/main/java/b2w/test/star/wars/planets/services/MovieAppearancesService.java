@@ -20,7 +20,7 @@ public class MovieAppearancesService {
         var planetName = planet.getName();
         log.info("Searching for movie appearances of planet: {}", planetName);
 
-        var planetsSearch = swapiApi.getFilmsByName(planetName);
+        var planetsSearch = swapiApi.getPlanetsByName(planetName);
 
         return getMatchingPlanetMovieAppearances(planetName, planetsSearch);
     }
@@ -34,7 +34,7 @@ public class MovieAppearancesService {
                     .orElse(0);
         }
 
-        var nextPagePlanetSearch = swapiApi.getFilmsByResource(planetsSearch.getNext());
+        var nextPagePlanetSearch = swapiApi.getPlanetsByResource(planetsSearch.getNext());
         log.info("Searching for matching planet on next page: {}", planetsSearch.getNext());
         return getMatchingPlanetMovieAppearances(planetName, nextPagePlanetSearch);
     }

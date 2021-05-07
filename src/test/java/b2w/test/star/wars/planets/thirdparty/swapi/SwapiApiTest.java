@@ -46,7 +46,7 @@ public class SwapiApiTest {
 
         given(restTemplate.getForEntity("http://swapi.api/planets?search={planetName}", PlanetSearchSwapiResponse.class, name)).willReturn(swapiResponse);
 
-        var result = swapiApi.getFilmsByName(name);
+        var result = swapiApi.getPlanetsByName(name);
 
         then(result).isEqualTo(planetsSearch);
     }
@@ -59,7 +59,7 @@ public class SwapiApiTest {
 
         given(restTemplate.getForEntity("http://swapi.api/planets?search={planetName}", PlanetSearchSwapiResponse.class, name)).willReturn(swapiResponse);
 
-        var result = swapiApi.getFilmsByName(name);
+        var result = swapiApi.getPlanetsByName(name);
 
         verify(swapiResponse, never()).getBody();
 
@@ -77,7 +77,7 @@ public class SwapiApiTest {
 
         given(restTemplate.getForEntity(url, PlanetSearchSwapiResponse.class)).willReturn(swapiResponse);
 
-        var result = swapiApi.getFilmsByResource(url);
+        var result = swapiApi.getPlanetsByResource(url);
 
         then(result).isEqualTo(planetsSearch);
     }
@@ -90,7 +90,7 @@ public class SwapiApiTest {
 
         given(restTemplate.getForEntity(url, PlanetSearchSwapiResponse.class)).willReturn(swapiResponse);
 
-        var result = swapiApi.getFilmsByResource(url);
+        var result = swapiApi.getPlanetsByResource(url);
 
         verify(swapiResponse, never()).getBody();
 
